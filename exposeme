@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if ping -q -c 1 -W 1 8.8.8.8 > /dev/null;
+then
+	echo "Connection established. And Sending mail . . ."
+	ngrok tcp 1118 &
+	if [ -e /root/expose-service/output/sshAccess.html ]
+	then
+		rm /root/expose-service/output/sshAccess.html
+	fi
+	sleep 3 && curl http://127.0.0.1:4040/status -o /root/expose-service/output/sshAccess.html
+	sleep 3 && sendmail -v publicu001@gmail.com < /root/expose-service/output/sshAccess.html
+	echo "Payload successfully sent by EMAIL"
+else
+	echo "Connection down. Please connect to the Internet"
+fi
+
