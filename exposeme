@@ -3,10 +3,12 @@
 # This script will send you local tunnel to your email, but make sure to setup sendmail configuration first.
 # Don't forget to mail destination address
 
+sudo apt update && sudo apt install -y curl 
 if ping -q -c 1 -W 1 8.8.8.8 > /dev/null;
 then
 	echo "Connection established. And Sending mail . . ."
-	ngrok tcp 1118 &
+	ngrok tcp 1118 & # Change 1118 to your ssh port
+	mkdir -p /root/expose-service/output
 	if [ -e /root/expose-service/output/sshAccess.html ]
 	then
 		rm /root/expose-service/output/sshAccess.html
